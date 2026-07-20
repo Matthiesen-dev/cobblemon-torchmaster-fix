@@ -19,10 +19,6 @@ megaTorchEntityBlockListOverrides = [ "+cobblemon:pokemon"]
 - [Cobblemon](https://modrinth.com/mod/cobblemon)
 - [Torchmaster](https://modrinth.com/mod/torchmaster)
 
-## Docs
-
-Documentation for this mod can be found at [mods.matthiesen.dev](https://mods.matthiesen.dev/cobblemon-torchmaster-fix/)
-
 ## Version Compatibility
 
 | Minecraft Version | Mod Version |
