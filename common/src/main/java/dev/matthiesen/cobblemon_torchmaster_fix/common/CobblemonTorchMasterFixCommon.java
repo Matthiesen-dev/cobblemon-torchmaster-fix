@@ -56,19 +56,19 @@ public class CobblemonTorchMasterFixCommon extends AbstractCommonMod {
             @Override
             public void onServerStart(MinecraftServer server) {
                 createInfoLog("Server started, setting up");
+
                 if (CobblemonTorchMasterFixCommon.INSTANCE.getEventsListening()) return;
+
                 CobblemonTorchMasterFixCommon.INSTANCE.setEventsListening(true);
+
                 CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.LOWEST, (event) -> {
                     PokemonEntity pokemonEntity = event.getEntity();
-                    if (!pokemonEntity.getPokemon().isWild()) return Unit.INSTANCE;
-
-                    var spawnedPos = pokemonEntity.position();
-
-                    EventResultContainer eventResultContainer = new EventResultContainer(EventResult.DEFAULT);
-                    TorchmasterEventHandler.onCheckSpawn(MobSpawnType.NATURAL, pokemonEntity, spawnedPos, eventResultContainer);
-
-                    if (eventResultContainer.getResult() == EventResult.DENY) event.cancel();
-
+                    if (pokemonEntity.getPokemon().isWild()) {
+                        var spawnedPos = pokemonEntity.position();
+                        EventResultContainer eventResultContainer = new EventResultContainer(EventResult.DEFAULT);
+                        TorchmasterEventHandler.onCheckSpawn(MobSpawnType.NATURAL, pokemonEntity, spawnedPos, eventResultContainer);
+                        if (eventResultContainer.getResult() == EventResult.DENY) event.cancel();
+                    }
                     return Unit.INSTANCE;
                 });
             }

@@ -1,20 +1,27 @@
-# template-cobblemon-sidemod
+# Cobblemon Torchmaster Fix
 
 <div>
   <img src="https://mods.matthiesen.dev/badges/matthiesenLibAPI.svg" alt="Matthiesen Lib API">
   <img src="https://mods.matthiesen.dev/badges/cobblemon.svg" alt="Cobblemon">
 </div>
 
-Template for a Cobblemon side mod. This template includes the necessary setup for a mod that depends on the Matthiesen Lib API and Cobblemon, 
-but does not include any specific functionality. You can use this as a starting point for creating your own Cobblemon side mod.
+This mod adds support for Torchmaster to Cobblemon, allowing Torchmaster's blocks to be used to prevent Cobblemon spawning. This mod is designed
+to only work with natural ("wild") Cobblemon spawns, and will not prevent spawns from player-owned Pokemon.
+
+By default, Cobblemon will be added to the Torchmaster's Dreadlamp's block list. You can also add additional overrides using the `torchmaster.toml` config file.
+
+```toml
+megaTorchEntityBlockListOverrides = [ "+cobblemon:pokemon"]
+```
 
 ## Requirements
 - [Matthiesen Lib API](https://modrinth.com/mod/matthiesen-lib-api)
 - [Cobblemon](https://modrinth.com/mod/cobblemon)
+- [Torchmaster](https://modrinth.com/mod/torchmaster)
 
 ## Docs
 
-Documentation for this mod can be found at [mods.matthiesen.dev](https://mods.matthiesen.dev/TODO/)
+Documentation for this mod can be found at [mods.matthiesen.dev](https://mods.matthiesen.dev/cobblemon-torchmaster-fix/)
 
 ## Version Compatibility
 
