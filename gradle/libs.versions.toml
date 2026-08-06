@@ -12,11 +12,12 @@ kotlin-for-forge = "5.10.0"
 cobblemon = "1.7.3+1.21.1"
 junit = "5.1.0"
 publish = "0.35.0"
-matthiesen_core = "1.0.0-beta.11"
+matthiesen_core = "1.0.0-beta.38"
 sponge-mixin = "0.8.5"
 torchmaster-fabric = "zHm4qOmP"
 torchmaster-neoforge = "PhWXajPC"
 owo-fabric = "JB1fLQnc"
+forge-config-api-port = "21.1.6"
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
@@ -48,15 +49,17 @@ sponge-mixin = { group = "org.spongepowered", name = "mixin", version.ref = "spo
 owo-fabric = { group = "maven.modrinth", name = "ccKDOlHs", version.ref = "owo-fabric" }
 torchmaster-fabric = { group = "maven.modrinth", name = "Tl8ESrhX", version.ref = "torchmaster-fabric" }
 torchmaster-neoforge = { group = "maven.modrinth", name = "Tl8ESrhX", version.ref = "torchmaster-neoforge" }
+forge-config-api-port-common = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-common-neoforgeapi", version.ref = "forge-config-api-port" }
+forge-config-api-port-fabric = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-fabric", version.ref = "forge-config-api-port" }
 
 [bundles]
-commonCompileOnly = ["sponge-mixin"]
+commonCompileOnly = ["sponge-mixin", "forge-config-api-port-common"]
 commonModCompileOnly = ["torchmaster-fabric"]
 commonImplementation = []
 commonModImplementation = ["cobblemon-common", "matthiesen-core-common"]
 
 fabricModImplementation = ["fabric-loader", "fabric-api", "fabric-language-kotlin"]
 fabricModImplementationNoTransitive = ["cobblemon-fabric", "matthiesen-core-fabric", "torchmaster-fabric"]
-fabricModRuntimeOnly = ["owo-fabric"]
+fabricModRuntimeOnly = ["owo-fabric", "forge-config-api-port-fabric"]
 
 neoforgeModImplementation = ["cobblemon-neoforge", "matthiesen-core-neoforge", "torchmaster-neoforge"]
