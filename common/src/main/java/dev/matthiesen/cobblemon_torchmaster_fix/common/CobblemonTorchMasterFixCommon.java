@@ -3,18 +3,17 @@ package dev.matthiesen.cobblemon_torchmaster_fix.common;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
-import dev.matthiesen.common.matthiesen_lib_api.abstracts.AbstractCommonMod;
-import dev.matthiesen.common.matthiesen_lib_api.core.interfaces.MatthiesenLibServerEventHandler;
 import dev.matthiesen.libs.faststats.Token;
+import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
+import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
 import kotlin.Unit;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.MobSpawnType;
 import net.xalcon.torchmaster.events.EventResult;
 import net.xalcon.torchmaster.events.EventResultContainer;
 import net.xalcon.torchmaster.events.TorchmasterEventHandler;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class CobblemonTorchMasterFixCommon extends AbstractCommonMod {
+public final class CobblemonTorchMasterFixCommon extends AbstractCommonMod {
     public static final String MOD_ID = "cobblemon_torchmaster_fix";
     public static final String MOD_NAME = "Cobblemon TorchMaster Fix";
     public static @Token final String METRICS_TOKEN = "7983d999278f74aa2b63c425bad05530";
@@ -37,41 +36,30 @@ public class CobblemonTorchMasterFixCommon extends AbstractCommonMod {
 
     public void initialize() {
         super.initialize();
-        registerServerEventHandler(getServerEventHandler());
+
+        PlatformEvents.SERVER_STARTING.subscribe(srvEvent -> {
+            createInfoLog("Server starting, setting up");
+
+            if (INSTANCE.getEventsListening()) return;
+            INSTANCE.setEventsListening(true);
+
+            CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.LOWEST, event -> {
+                PokemonEntity pokemonEntity = event.getEntity();
+                if (pokemonEntity.getPokemon().isWild()) {
+                    var spawnedPos = pokemonEntity.position();
+                    EventResultContainer eventResultContainer = new EventResultContainer(EventResult.DEFAULT);
+                    TorchmasterEventHandler.onCheckSpawn(MobSpawnType.NATURAL, pokemonEntity, spawnedPos, eventResultContainer);
+                    if (eventResultContainer.getResult() == EventResult.DENY) event.cancel();
+                }
+                return Unit.INSTANCE;
+            });
+        });
+
         createInfoLog("Initialized");
     }
 
     @Override
-    public @Nullable @Token String getMetricsToken() {
+    public @Token @NotNull String getMetricsToken() {
         return METRICS_TOKEN;
-    }
-
-    @Override
-    public Runnable reload() {
-        return null;
-    }
-
-    public MatthiesenLibServerEventHandler getServerEventHandler() {
-        return new MatthiesenLibServerEventHandler() {
-            @Override
-            public void onServerStart(MinecraftServer server) {
-                createInfoLog("Server started, setting up");
-
-                if (CobblemonTorchMasterFixCommon.INSTANCE.getEventsListening()) return;
-
-                CobblemonTorchMasterFixCommon.INSTANCE.setEventsListening(true);
-
-                CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.LOWEST, (event) -> {
-                    PokemonEntity pokemonEntity = event.getEntity();
-                    if (pokemonEntity.getPokemon().isWild()) {
-                        var spawnedPos = pokemonEntity.position();
-                        EventResultContainer eventResultContainer = new EventResultContainer(EventResult.DEFAULT);
-                        TorchmasterEventHandler.onCheckSpawn(MobSpawnType.NATURAL, pokemonEntity, spawnedPos, eventResultContainer);
-                        if (eventResultContainer.getResult() == EventResult.DENY) event.cancel();
-                    }
-                    return Unit.INSTANCE;
-                });
-            }
-        };
     }
 }

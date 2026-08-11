@@ -1,7 +1,7 @@
 # Cobblemon Torchmaster Fix
 
 <div>
-  <img src="https://mods.matthiesen.dev/badges/matthiesenLibAPI.svg" alt="Matthiesen Lib API">
+  <img src="https://mods.matthiesen.dev/badges/matthiesenCore.svg" alt="Matthiesen Core">
   <img src="https://mods.matthiesen.dev/badges/cobblemon.svg" alt="Cobblemon">
 </div>
 
@@ -15,15 +15,16 @@ megaTorchEntityBlockListOverrides = [ "+cobblemon:pokemon"]
 ```
 
 ## Requirements
-- [Matthiesen Lib API](https://modrinth.com/mod/matthiesen-lib-api)
+
+- [Matthiesen Core](https://modrinth.com/mod/matthiesen-core)
 - [Cobblemon](https://modrinth.com/mod/cobblemon)
 - [Torchmaster](https://modrinth.com/mod/torchmaster)
 
 ## Version Compatibility
 
-| Minecraft Version | Mod Version |
-|-------------------|-------------|
-| 1.21.1            | 1.x.x       |
+| Minecraft Version | Cobblemon Version | Mod Version |
+|-------------------|-------------------|-------------|
+| 1.21.1            | 1.7.3             | 1.x.x       |
 
 ## FastStats Metrics
 
@@ -33,7 +34,7 @@ how this mod is being used and improve it over time. You can learn more about th
 
 You can also view the data collected by this mod on the [FastStats: Cobblemon Torchmaster Fix](https://faststats.dev/project/cobblemon-torchmaster-fix) page.
 
-To opt out of this data collection, set the `enabled` property to `false` in the `<game_directory>/config/matthiesen_lib_api/metrics.properties` file.
+To opt out of this data collection, set the `enabled` property to `false` in the `<game_directory>/config/matthiesen_core/metrics.properties` file.
 
 ## License
 
