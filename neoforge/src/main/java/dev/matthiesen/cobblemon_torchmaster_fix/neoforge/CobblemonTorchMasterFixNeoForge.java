@@ -4,7 +4,7 @@ import dev.matthiesen.cobblemon_torchmaster_fix.common.CobblemonTorchMasterFixCo
 import net.neoforged.fml.common.Mod;
 
 @Mod(CobblemonTorchMasterFixCommon.MOD_ID)
-public class CobblemonTorchMasterFixNeoForge {
+public final class CobblemonTorchMasterFixNeoForge {
     public CobblemonTorchMasterFixNeoForge() {
         var instance = CobblemonTorchMasterFixCommon.INSTANCE;
         instance.createInfoLog("Loading for NeoForge Mod Loader");

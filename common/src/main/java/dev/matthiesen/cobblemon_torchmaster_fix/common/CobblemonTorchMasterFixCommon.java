@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import dev.matthiesen.libs.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
+import dev.matthiesen.matthiesen_core.common.api.events.server.ServerEvent;
 import kotlin.Unit;
 import net.minecraft.world.entity.MobSpawnType;
 import net.xalcon.torchmaster.events.EventResult;
@@ -37,25 +38,27 @@ public final class CobblemonTorchMasterFixCommon extends AbstractCommonMod {
     public void initialize() {
         super.initialize();
 
-        PlatformEvents.SERVER_STARTING.subscribe(srvEvent -> {
-            createInfoLog("Server starting, setting up");
-
-            if (INSTANCE.getEventsListening()) return;
-            INSTANCE.setEventsListening(true);
-
-            CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.LOWEST, event -> {
-                PokemonEntity pokemonEntity = event.getEntity();
-                if (pokemonEntity.getPokemon().isWild()) {
-                    var spawnedPos = pokemonEntity.position();
-                    EventResultContainer eventResultContainer = new EventResultContainer(EventResult.DEFAULT);
-                    TorchmasterEventHandler.onCheckSpawn(MobSpawnType.NATURAL, pokemonEntity, spawnedPos, eventResultContainer);
-                    if (eventResultContainer.getResult() == EventResult.DENY) event.cancel();
-                }
-                return Unit.INSTANCE;
-            });
-        });
+        PlatformEvents.SERVER_STARTING.subscribe(this::onServerStarting);
 
         createInfoLog("Initialized");
+    }
+
+    public void onServerStarting(ServerEvent.Starting event) {
+        createInfoLog("Server starting, setting up");
+
+        if (INSTANCE.getEventsListening()) return;
+        INSTANCE.setEventsListening(true);
+
+        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.LOWEST, spawnEvent -> {
+            PokemonEntity pokemonEntity = spawnEvent.getEntity();
+            if (pokemonEntity.getPokemon().isWild()) {
+                var spawnedPos = pokemonEntity.position();
+                EventResultContainer eventResultContainer = new EventResultContainer(EventResult.DEFAULT);
+                TorchmasterEventHandler.onCheckSpawn(MobSpawnType.NATURAL, pokemonEntity, spawnedPos, eventResultContainer);
+                if (eventResultContainer.getResult() == EventResult.DENY) spawnEvent.cancel();
+            }
+            return Unit.INSTANCE;
+        });
     }
 
     @Override
