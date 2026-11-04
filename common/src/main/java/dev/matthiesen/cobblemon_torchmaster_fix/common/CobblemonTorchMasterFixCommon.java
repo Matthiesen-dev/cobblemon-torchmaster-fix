@@ -3,7 +3,7 @@ package dev.matthiesen.cobblemon_torchmaster_fix.common;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
-import dev.matthiesen.libs.faststats.Token;
+import dev.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
 import dev.matthiesen.matthiesen_core.common.api.events.server.ServerEvent;
